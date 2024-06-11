@@ -1,0 +1,21 @@
+{
+	"name": "userscript-template",
+	"version": "1.0.0",
+	"description": "A template for creating a userscript",
+	"author": "vaaski <admin@vaa.ski>",
+	"module": "src/index.ts",
+	"scripts": {
+		"start": "tsup",
+		"dev": "tsup --watch src --watch styles",
+		"format": "prettier --write src styles",
+		"lint": "biome lint --write src"
+	},
+	"type": "module",
+	"devDependencies": {
+		"@biomejs/biome": "^1.8.1",
+		"@types/node": "^20.14.2",
+		"prettier": "^3.3.2",
+		"tsup": "^8.1.0",
+		"typescript": "^5.4.5"
+	}
+}

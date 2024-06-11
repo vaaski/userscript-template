@@ -1,0 +1,10 @@
+{
+	"include": ["tsup.config.ts"],
+	"compilerOptions": {
+		"composite": true,
+		"lib": ["ESNext"],
+		"types": ["@types/node"],
+		"module": "ESNext",
+		"moduleResolution": "Bundler"
+	}
+}
