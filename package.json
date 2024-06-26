@@ -6,7 +6,7 @@
 	"module": "src/index.ts",
 	"scripts": {
 		"start": "tsup",
-		"dev": "tsup --watch src --watch styles",
+		"dev": "tsup --watch src --watch styles --watch tsup.config.ts",
 		"format": "prettier --write src styles tsup.config.ts",
 		"lint": "biome lint --write src"
 	},
