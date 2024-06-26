@@ -1,3 +1,3 @@
 import "../styles/index.css"
 
-alert("Userscript loaded")
+alert(`Userscript loaded at ${location.href}`)
