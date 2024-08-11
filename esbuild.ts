@@ -14,7 +14,7 @@ const esbuildConfig: esbuild.BuildOptions = {
 	outfile: "dist/index.user.js",
 	loader: { ".css": "text" },
 	splitting: false,
-	format: "iife",
+	format: "esm",
 	platform: "browser",
 	define: {
 		"window.env.BUILT_UNIX": `"${buildDate.getTime().toString()}"`,
@@ -32,8 +32,10 @@ const esbuildConfig: esbuild.BuildOptions = {
 			`// @icon         ${userscript.icon}`,
 			...userscript.matches.map((v) => `// @match        ${v}`),
 			"// ==/UserScript==",
+			";(async () => {",
 		].join("\n"),
 	},
+	footer: { js: "})();" },
 }
 
 if (mode === "dev") {
