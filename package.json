@@ -3,10 +3,16 @@
 	"version": "1.0.0",
 	"description": "A template for creating a userscript",
 	"author": "vaaski <admin@vaa.ski>",
+	"userscript": {
+		"icon": "https://www.google.com/s2/favicons?sz=64&domain=google.com",
+		"matches": [
+			"https://www.google.com/*"
+		]
+	},
 	"module": "src/index.ts",
 	"scripts": {
-		"start": "tsup",
-		"dev": "tsup --watch src --watch styles --watch tsup.config.ts",
+		"start": "bun run esbuild.ts",
+		"dev": "bun run esbuild.ts dev",
 		"format": "prettier --write src styles tsup.config.ts",
 		"lint": "biome lint --write src"
 	},
@@ -14,8 +20,8 @@
 	"devDependencies": {
 		"@biomejs/biome": "^1.8.3",
 		"@types/node": "^20.14.15",
+		"esbuild": "^0.23.0",
 		"prettier": "^3.3.3",
-		"tsup": "^8.2.4",
 		"typescript": "^5.5.4"
 	}
 }
