@@ -7,7 +7,7 @@
 - Install Bun and Node
 - Install [Violentmonkey](https://violentmonkey.github.io/get-it).
 - Install the dependencies: `bun i`
-- Run `bun start` to transpile and bundle the script
+- Run `bun run build` to transpile and bundle the script
 - Drag the `dist/index.user.js` file into your browser and click install.
 
 ## About this template

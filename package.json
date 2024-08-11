@@ -11,7 +11,7 @@
 	},
 	"module": "src/index.ts",
 	"scripts": {
-		"start": "bun run esbuild.ts",
+		"build": "bun run esbuild.ts",
 		"dev": "bun run esbuild.ts dev",
 		"format": "prettier --write src styles tsup.config.ts",
 		"lint": "biome lint --write src"
