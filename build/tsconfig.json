@@ -1,20 +1,21 @@
 {
 	"compilerOptions": {
+
+		// Bundler mode
 		"composite": true,
 		"target": "ESNext",
 		"jsx": "react-jsx",
 		// Environment setup & latest features
-		"lib": ["ESNext", "DOM"],
+		"lib": ["ESNext"],
 		"moduleDetection": "force",
 		"module": "Preserve",
-
-		// Bundler mode
 		"moduleResolution": "bundler",
 		"paths": {
 			"~~/*": ["./*"]
 		},
-		"types": [],
+		"types": ["bun"],
 		"allowImportingTsExtensions": true,
+		"rewriteRelativeImportExtensions": true,
 		"allowJs": true,
 
 		// Best practices
@@ -27,14 +28,10 @@
 		// Some stricter flags (disabled by default)
 		"noUnusedLocals": false,
 		"noUnusedParameters": false,
-		"noEmit": true,
 		"verbatimModuleSyntax": true,
 		"skipLibCheck": true
 	},
-	"references": [
-		{ "path": "./build" }
-	],
-	"include": [
+	"exclude": [
 		"userscript/**/*.ts"
 	]
 }
