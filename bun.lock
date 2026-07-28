@@ -6,6 +6,7 @@
       "name": "userscript-template",
       "devDependencies": {
         "@antfu/eslint-config": "^9.2.0",
+        "@clack/prompts": "^1.7.0",
         "@types/bun": "latest",
         "@violentmonkey/types": "^0.3.4",
         "eslint": "^10.8.0",
