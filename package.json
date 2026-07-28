@@ -1,19 +1,19 @@
 {
-  "name": "userscript-template",
-  "module": "index.ts",
-  "type": "module",
-  "private": true,
-  "devDependencies": {
-    "@antfu/eslint-config": "^9.2.0",
-    "@types/bun": "latest",
-    "eslint": "^10.8.0",
-    "eslint-plugin-format": "^2.0.1",
-    "eslint-plugin-vaaski": "^3.1.1"
-  },
-  "peerDependencies": {
-    "typescript": "^5"
-  },
-  "scripts": {
-    "lint": "eslint ."
-  }
+	"name": "userscript-template",
+	"type": "module",
+	"private": true,
+	"module": "index.ts",
+	"scripts": {
+		"lint": "eslint ."
+	},
+	"peerDependencies": {
+		"typescript": "^5"
+	},
+	"devDependencies": {
+		"@antfu/eslint-config": "^9.2.0",
+		"@types/bun": "latest",
+		"eslint": "^10.8.0",
+		"eslint-plugin-format": "^2.0.1",
+		"eslint-plugin-vaaski": "^3.1.1"
+	}
 }
