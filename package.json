@@ -22,7 +22,7 @@
 	},
 	"userscript": {
 		"icon": "https://www.google.com/s2/favicons?sz=64&domain=google.com",
-		"matches": [
+		"match": [
 			"http://localhost:3000/*"
 		],
 		"grant": [
