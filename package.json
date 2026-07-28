@@ -1,7 +1,10 @@
 {
 	"name": "userscript-template",
 	"type": "module",
+	"version": "1.0.0",
 	"private": true,
+	"description": "A template for creating a userscript",
+	"author": "vaaski <admin@vaa.ski>",
 	"module": "index.ts",
 	"scripts": {
 		"lint": "eslint ."
@@ -12,8 +15,18 @@
 	"devDependencies": {
 		"@antfu/eslint-config": "^9.2.0",
 		"@types/bun": "latest",
+		"@violentmonkey/types": "^0.3.4",
 		"eslint": "^10.8.0",
 		"eslint-plugin-format": "^2.0.1",
 		"eslint-plugin-vaaski": "^3.1.1"
+	},
+	"userscript": {
+		"icon": "https://www.google.com/s2/favicons?sz=64&domain=google.com",
+		"matches": [
+			"http://localhost:3000/*"
+		],
+		"grant": [
+			"GM.registerMenuCommand"
+		]
 	}
 }
