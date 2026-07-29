@@ -2,16 +2,15 @@
 	"compilerOptions": {
 		"composite": true,
 		"target": "ESNext",
-		"jsx": "react-jsx",
 		"lib": ["ESNext"],
 		"moduleDetection": "force",
 		"module": "Preserve",
 
 		"moduleResolution": "bundler",
 		"paths": {
-			"~~/*": ["./*"]
+			"~~/*": ["../*"]
 		},
-		"types": ["bun"],
+		"types": ["bun", "node"],
 		"allowImportingTsExtensions": true,
 		"rewriteRelativeImportExtensions": true,
 		"allowJs": true,
@@ -27,7 +26,8 @@
 		"verbatimModuleSyntax": true,
 		"skipLibCheck": true
 	},
-	"exclude": [
-		"userscript/**/*.ts"
+	"include": [
+		"./**/*",
+		"../cli/**/*"
 	]
 }

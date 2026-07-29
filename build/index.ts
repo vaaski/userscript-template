@@ -2,8 +2,8 @@ import { watch } from "node:fs"
 import { readdir } from "node:fs/promises"
 import path from "node:path"
 import { parseArgs, styleText } from "node:util"
-import { makeMetadataBlock } from "~~/meta"
 import { author, description, name, userscript, version } from "../package.json"
+import { makeMetadataBlock } from "./util"
 
 const { values } = parseArgs({
 	args: process.argv.slice(2),

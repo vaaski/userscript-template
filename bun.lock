@@ -8,6 +8,7 @@
         "@antfu/eslint-config": "^9.2.0",
         "@clack/prompts": "^1.7.0",
         "@types/bun": "latest",
+        "@types/node": "^26.1.2",
         "@violentmonkey/types": "^0.3.4",
         "eslint": "^10.8.0",
         "eslint-plugin-format": "^2.0.1",
