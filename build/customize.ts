@@ -102,12 +102,13 @@ if (isCancel(autoIcon)) {
 	process.exit(0)
 }
 
+const autoIconUrl = `https://www.google.com/s2/favicons?sz=64&domain=${matchURL.host}`
 const icon = autoIcon
-	? `https://www.google.com/s2/favicons?sz=64&domain=${matchURL.host}`
+	? autoIconUrl
 	: await text({
 			message: "What's the icon URL then?",
-			placeholder: packageJson.userscript.icon,
-			initialValue: packageJson.userscript.icon,
+			placeholder: autoIconUrl,
+			initialValue: autoIconUrl,
 			validate: (icon = packageJson.userscript.icon) => {
 				if (!icon || icon.length === 0) {
 					return "icon is required"
@@ -115,11 +116,17 @@ const icon = autoIcon
 			},
 		})
 
+if (isCancel(icon)) {
+	onCancel()
+	process.exit(0)
+}
+
 const availablePermissions = ["GM.addStyle", "GM.addElement", "GM.cookie", "GM.registerMenuCommand", "GM.deleteValue", "GM.deleteValues", "GM.download", "GM.getResourceUrl", "GM.getValue", "GM.getValues", "GM.info", "GM.listValues", "GM.notification", "GM.openInTab", "GM.setClipboard", "GM.setValue", "GM.setValues", "GM.xmlHttpRequest"]
 const grant = await autocompleteMultiselect({
 	message: "Any special permissions?",
 	placeholder: "Type to search...",
-	maxItems: 6,
+	initialValues: availablePermissions.filter(permission => packageJson.userscript.grant.includes(permission)),
+	maxItems: 8,
 	options: [
 		...availablePermissions.map(permission => ({
 			value: permission,
