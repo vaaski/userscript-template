@@ -70,5 +70,5 @@ if (values.watch) {
 
 	console.log(styleText("gray", "watching..."))
 } else {
-	console.log(styleText("gray", "done."))
+	console.log(styleText("gray", "output:"), styleText("green", path.join(import.meta.dir, "../out/index.user.js")))
 }
