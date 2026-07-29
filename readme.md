@@ -63,6 +63,35 @@ The [build script](./build/index.ts) takes two optional flags:
 - Run `bun run build`
 - Output should be at `out/index.user.js`
 
+## Examples
+
+- Toggle injected styles with userscript menu item
+
+  ```ts
+  import { loadStyle } from "~~/build/styles" with { type: "macro" }
+  import { injectStyle } from "~~/userscript/util/inject-style"
+
+  const style = loadStyle("styles/main.css")
+  let removeInjection: (() => void) | undefined = injectStyle(style)
+
+  GM.registerMenuCommand(
+    "Toggle CSS injection",
+    () => {
+      if (removeInjection) {
+        removeInjection()
+        removeInjection = undefined
+      } else {
+        removeInjection = injectStyle(style)
+      }
+    },
+    {
+      icon: "https://www.google.com/s2/favicons?sz=64&domain=google.com",
+      autoClose: false,
+      title: "Example menu command",
+    },
+  )
+  ```
+
 ## See also
 
 - [Violentmonkey](https://violentmonkey.github.io)
@@ -75,9 +104,9 @@ GNU GPLv3
 <br>
 
 <a href="https://brainmade.org">
-	<picture>
-		<source media="(prefers-color-scheme: dark)" srcset="https://brainmade.org/white-logo.svg">
-		<source media="(prefers-color-scheme: light)" srcset="https://brainmade.org/black-logo.svg">
-		<img alt="Brainmade.org Logo" src="https://brainmade.org/black-logo.svg">
-	</picture>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://brainmade.org/white-logo.svg">
+    <source media="(prefers-color-scheme: light)" srcset="https://brainmade.org/black-logo.svg">
+    <img alt="Brainmade.org Logo" src="https://brainmade.org/black-logo.svg">
+  </picture>
 </a>
