@@ -1,24 +1,83 @@
-<h1><img src="https://www.google.com/s2/favicons?sz=64&domain=google.com" /> Userscript Template</h1>
+# Userscript Template
 
-> A template for creating userscripts with TypeScript.
+> Opinionated, slim and fast boilerplate for creating userscripts
+
+## Features
+
+- Bundles everything into a single `user.index.js`
+- Preloaded with Violentmonkey types
+- Serve userscript over HTTP for development
+- Inline styles with `loadStyle` compiler macro and `injectStyle` runtime `<style>` tag creator
+
+  ```js
+  // transforms this
+  injectStyle(loadStyle("styles/main.css"))
+
+  // into this
+  injectStyle("*{color:red!important}")
+  ```
+
+- Interactive customizer for setup
+
+  ```sh
+  ❯ bun run customize
+
+    ┌ userscript-template setup wizard
+    │
+    ◇ What should the userscript be called?
+    │ epic-userscript
+    │
+    ◇ Describe it.
+    │ makes the web more usable
+    │
+
+    [...]
+  ```
+
+- Automatic userscript metablock generation from package.json fields
+- No dependencies, fully utilizing bun's fast toolchain (apart from customizer prompts)
+- Opinionated ESLint + ESLint-Stylistic configuration
 
 ## Installing
 
-- Install Bun and Node
-- Install [Violentmonkey](https://violentmonkey.github.io/get-it).
-- Install the dependencies: `bun i`
-- Run `bun run build` to transpile and bundle the script
-- Drag the `dist/index.user.js` file into your browser and click install.
+- Install [bun](https://bun.sh)
+- Clone this repo or [generate from template](https://github.com/vaaski/userscript-template/generate)
+- Run `bun install`
+- Run `bun run customize`
 
-## About this template
+## Usage
 
-- The metadata for the script is completely defined in [`package.json`](package.json).
-  - Relevant keys in [`esbuild.ts#L6`](esbuild.ts#L6).
-- CSS injection is manual, they'll be imported as a string.
-  - There is a `styleInject` function in [`src/util.ts`](src/util.ts) that takes a CSS string and injects a `<style>` tag with the given name as the ID.
-  - This is to avoid a duplicate styleInject function definition by esbuild and to provide more manual control.
-- The `dev` script will watch for changes and rebuild the script.
-- The bundle config is in [`esbuild.ts`](esbuild.ts).
-- Build-time variables are declared in [`esbuild.ts#L19`](esbuild.ts#L19) at `esbuildConfig.define` and typed in [`types/window.d.ts`](types/window.d.ts).
-- Linting is done with [Biome](https://biomejs.dev).
-- Formatting is done with [Prettier](https://prettier.io).
+The [build script](./build/index.ts) takes two optional flags:
+
+- `--minify`, `-m` to minify the output
+- `--watch`, `-w` to watch for changes and rebuild
+
+### Development
+
+- Run `bun run dev`
+- Open `http://localhost:3000` in your browser
+- Click the userscript link. It should automatically open your userscript manager.
+
+### Production
+
+- Run `bun run build`
+- Output should be at `out/index.user.js`
+
+## See also
+
+- [Violentmonkey](https://violentmonkey.github.io)
+- [Violentmonkey API Documentation](https://violentmonkey.github.io/api)
+
+## License
+
+GNU GPLv3
+
+<br>
+
+<a href="https://brainmade.org">
+	<picture>
+		<source media="(prefers-color-scheme: dark)" srcset="https://brainmade.org/white-logo.svg">
+		<source media="(prefers-color-scheme: light)" srcset="https://brainmade.org/black-logo.svg">
+		<img alt="Brainmade.org Logo" src="https://brainmade.org/black-logo.svg">
+	</picture>
+</a>

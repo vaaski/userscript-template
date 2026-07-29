@@ -1,27 +1,36 @@
 {
 	"name": "userscript-template",
+	"type": "module",
 	"version": "1.0.0",
+	"private": true,
 	"description": "A template for creating a userscript",
 	"author": "vaaski <admin@vaa.ski>",
+	"module": "index.ts",
+	"scripts": {
+		"lint": "eslint .",
+		"dev": "bun run build/index.ts --watch",
+		"build": "bun run build/index.ts",
+		"customize": "bun run build/customize.ts"
+	},
+	"peerDependencies": {
+		"typescript": "^5"
+	},
+	"devDependencies": {
+		"@antfu/eslint-config": "^9.2.0",
+		"@clack/prompts": "^1.7.0",
+		"@types/bun": "latest",
+		"@violentmonkey/types": "^0.3.4",
+		"eslint": "^10.8.0",
+		"eslint-plugin-format": "^2.0.1",
+		"eslint-plugin-vaaski": "^3.1.1"
+	},
 	"userscript": {
 		"icon": "https://www.google.com/s2/favicons?sz=64&domain=google.com",
-		"matches": [
-			"https://www.google.com/*"
+		"match": [
+			"http://localhost:3000/*"
+		],
+		"grant": [
+			"GM.registerMenuCommand"
 		]
-	},
-	"module": "src/index.ts",
-	"scripts": {
-		"build": "bun run esbuild.ts",
-		"dev": "bun run esbuild.ts dev",
-		"format": "prettier --write src styles tsup.config.ts",
-		"lint": "biome lint --write src"
-	},
-	"type": "module",
-	"devDependencies": {
-		"@biomejs/biome": "^1.8.3",
-		"@types/node": "^20.14.15",
-		"esbuild": "^0.23.0",
-		"prettier": "^3.3.3",
-		"typescript": "^5.5.4"
 	}
 }
