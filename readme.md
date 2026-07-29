@@ -37,6 +37,7 @@
 - Automatic userscript metablock generation from package.json fields
 - No dependencies, fully utilizing bun's fast toolchain (apart from customizer prompts)
 - Opinionated ESLint + ESLint-Stylistic configuration
+- Builds quickly on every GitHub push and releases as artifact
 
 ## Installing
 
