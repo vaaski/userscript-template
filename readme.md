@@ -95,6 +95,7 @@ The [build script](./build/index.ts) takes two optional flags:
 
 ## See also
 
+- [Spawncamp](https://github.com/vaaski/spawncamp) - my userscript utility toolbox
 - [Violentmonkey](https://violentmonkey.github.io)
 - [Violentmonkey API Documentation](https://violentmonkey.github.io/api)
 
