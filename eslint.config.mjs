@@ -7,6 +7,12 @@ export default antfu(
 
 		typescript: true,
 
+		formatters: {
+			css: true,
+			html: true,
+			markdown: "prettier",
+		},
+
 		stylistic: {
 			quotes: "double",
 			indent: "tab",
