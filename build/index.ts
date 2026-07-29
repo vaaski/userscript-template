@@ -1,4 +1,5 @@
 import { watch } from "node:fs"
+import { readdir } from "node:fs/promises"
 import path from "node:path"
 import { parseArgs, styleText } from "node:util"
 import { makeMetadataBlock } from "~~/meta"
@@ -52,11 +53,22 @@ const startWatching = (folder: string) => {
 build()
 
 if (values.watch) {
-	console.log(styleText("gray", "watching..."))
+	const server = Bun.serve({
+		routes: {
+			"/": new Response(Bun.file(path.join(import.meta.dir, "../build/dev.html"))),
+			"/__files": async () => Response.json(await readdir(path.join(import.meta.dir, "../out"))),
+			"/favicon.ico": new Response(await fetch(userscript.icon).then(res => res.blob())),
+			"/index.user.js": new Response(Bun.file(path.join(import.meta.dir, "../out/index.user.js"))),
+		},
+	})
+
+	console.log(styleText("gray", "server running at"), styleText("green", server.url.toString()))
 
 	startWatching("./userscript")
 	startWatching("./build")
 	startWatching("./styles")
+
+	console.log(styleText("gray", "watching..."))
 } else {
 	console.log(styleText("gray", "done."))
 }
