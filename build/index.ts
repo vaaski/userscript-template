@@ -1,6 +1,6 @@
 import { watch } from "node:fs"
 import path from "node:path"
-import { parseArgs } from "node:util"
+import { parseArgs, styleText } from "node:util"
 import { makeMetadataBlock } from "~~/meta"
 import { author, description, name, userscript, version } from "../package.json"
 
@@ -42,20 +42,21 @@ const build = async () => {
 }
 
 const startWatching = (folder: string) => {
-	watch(path.join(import.meta.dir, "..", folder), { recursive: true }, (event, filename) => {
-		console.log(`[${event}] ${folder}/${filename}`)
-		build()
+	watch(path.join(import.meta.dir, "..", folder), { recursive: true }, async (event, filename) => {
+		process.stdout.write(`${styleText("gray", `[${event}]`)} ${folder}/${filename}`)
+		await build()
+		console.log(styleText("green", " ✓"))
 	})
 }
 
 build()
 
 if (values.watch) {
-	console.log("watching...")
+	console.log(styleText("gray", "watching..."))
 
 	startWatching("./userscript")
 	startWatching("./build")
 	startWatching("./styles")
 } else {
-	console.log("done.")
+	console.log(styleText("gray", "done."))
 }
