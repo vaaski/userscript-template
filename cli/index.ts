@@ -21,22 +21,36 @@ const { values, positionals } = parseArgs({
 			type: "boolean",
 			short: "h",
 		},
+		local: {
+			type: "boolean",
+			short: "l",
+		},
 	},
 	allowPositionals: true,
 })
 
-const pathsToCopy = [
+const pathsToCopyFull = [
 	"build/",
 	"bun.lock",
+	"cli/",
 	"eslint.config.mjs",
 	// "license.md", // todo: recommend adding a license
-	"out/",
 	"package.json",
 	"readme.md",
 	"styles/",
 	"tsconfig.json",
 	"userscript/",
 ]
+
+const copy = async (paths: string[]) => {
+	await Promise.all(paths.map((sourcePath) => {
+		return cp(
+			path.join(import.meta.dir, "..", sourcePath),
+			path.join(process.cwd(), sourcePath),
+			{ recursive: true, errorOnExist: !values.force, force: values.force },
+		)
+	}))
+}
 
 let runner = "u9"
 const helpMessage = (full = false, ...custom: Parameters<typeof tableize>[0]) => {
@@ -48,7 +62,8 @@ const helpMessage = (full = false, ...custom: Parameters<typeof tableize>[0]) =>
 
 	if (full) {
 		helpItems.unshift(
-			[styleText("gray", "local setup"), styleText("bold", `${runner} init`)],
+			[styleText("gray", "minimal setup"), styleText("bold", `${runner} init`)],
+			[styleText("gray", "full local setup"), styleText("bold", `${runner} init --local`)],
 		)
 	}
 
@@ -56,10 +71,17 @@ const helpMessage = (full = false, ...custom: Parameters<typeof tableize>[0]) =>
 }
 
 const command = positionals.at(0)
+const isLocalSetup = await Bun.file(path.join(process.cwd(), "build/customize.ts")).exists()
+
+/** resolves script path to local or cli setup */
+const maybeCliPath = (name: string) => {
+	return isLocalSetup ? name : path.join(import.meta.dir, "..", name)
+}
 
 // --------------------------------------------------------------------------------------
 
 if (command === "help" || command === "h" || values.help) {
+	if (isLocalSetup) runner = "bun run"
 	note(helpMessage(true), "available commands")
 	process.exit(0)
 }
@@ -67,42 +89,42 @@ if (command === "help" || command === "h" || values.help) {
 // --------------------------------------------------------------------------------------
 
 if (command === "init" || command === "n") {
-	await Promise.all(pathsToCopy.map((sourcePath) => {
-		return cp(
-			path.join(import.meta.dir, "..", sourcePath),
-			path.join(process.cwd(), sourcePath),
-			{ recursive: true, errorOnExist: !values.force, force: values.force },
-		)
-	}))
+	if (values.local) {
+		await copy(pathsToCopyFull)
 
-	const spin = spinner()
+		const spin = spinner()
 
-	spin.start("installing dependencies")
-	const proc = Bun.spawn({
-		cmd: ["bun", "install"],
+		spin.start("installing dependencies")
+		const installerProcess = Bun.spawn({
+			cmd: ["bun", "install"],
+			cwd: process.cwd(),
+			stderr: "inherit",
+		})
+
+		await installerProcess.exited
+		spin.stop("local setup initialized")
+
+		const customizerProcess = Bun.spawn({
+			cmd: ["bun", "run", "build/customize.ts"],
+			cwd: process.cwd(),
+			stdio: ["inherit", "inherit", "inherit"],
+		})
+
+		await customizerProcess.exited
+
+		runner = "bun run"
+		if (customizerProcess.exitCode === 0) note(helpMessage(), "next steps")
+	} else {
+		note(`minimal setup is WIP, try ${styleText("bold", `${runner} init --local`)} for now.`)
+	}
+} else if (command === "customize" || command === "c") {
+	const customizerProcess = Bun.spawn({
+		cmd: ["bun", "run", maybeCliPath("build/customize.ts")],
 		cwd: process.cwd(),
-		stderr: "inherit",
+		stdio: ["inherit", "inherit", "inherit"],
 	})
 
-	await proc.exited
-	spin.stop("userscript-template initialized")
+	await customizerProcess.exited
 
-	runner = "bun run"
-	note(helpMessage(), "next steps")
-
-	process.exit(0)
+	if (customizerProcess.exitCode === 0) note(helpMessage(), "next steps")
 }
-
-// if ("userscript" in packageJson) {
-// 	log.info("userscript is already set up")
-
-// 	process.exit(0)
-// }
-
-// await confirm({
-// 	message: [
-// 		"test",
-// 	].join("\n"),
-// })
-
-// await import("../build/customize")
