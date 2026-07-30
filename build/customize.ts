@@ -4,7 +4,7 @@ import { autocompleteMultiselect, cancel, confirm, group, intro, isCancel, outro
 const packageJson = await Bun.file("package.json").json()
 
 console.log()
-intro("userscript-template setup wizard")
+intro(styleText("gray", "userscript-template setup wizard"))
 
 const onCancel = () => {
 	cancel("setup cancelled.")
@@ -13,12 +13,17 @@ const onCancel = () => {
 
 // --------------------------------------------------------------------------------------
 
+const defaultName = "epic-userscript"
+const defaultDescription = "makes the web more usable"
+const defaultVersion = "1.0.0"
+const defaultAuthor = "someone <someone@example.com>"
+
 const info = await group({
 	name: () => text({
 		message: "What should the userscript be called?",
-		placeholder: packageJson.name,
-		initialValue: packageJson.name,
-		validate: (name = packageJson.name) => {
+		placeholder: defaultName,
+		initialValue: defaultName,
+		validate: (name = defaultName) => {
 			if (!name || name.length === 0) {
 				return "name is required"
 			}
@@ -35,9 +40,9 @@ const info = await group({
 
 	description: () => text({
 		message: "Describe it.",
-		placeholder: packageJson.description,
-		initialValue: packageJson.description,
-		validate: (description = packageJson.description) => {
+		placeholder: defaultDescription,
+		initialValue: defaultDescription,
+		validate: (description = defaultDescription) => {
 			if (!description || description.length === 0) {
 				return "description is required"
 			}
@@ -46,9 +51,9 @@ const info = await group({
 
 	version: () => text({
 		message: "What's the version?",
-		placeholder: packageJson.version,
-		initialValue: packageJson.version,
-		validate: (version = packageJson.version) => {
+		placeholder: defaultVersion,
+		initialValue: defaultVersion,
+		validate: (version = defaultVersion) => {
 			if (!version || version.length === 0) {
 				return "version is required"
 			}
@@ -57,9 +62,9 @@ const info = await group({
 
 	author: () => text({
 		message: "Who made it?",
-		placeholder: packageJson.author,
-		initialValue: packageJson.author,
-		validate: (author = packageJson.author) => {
+		placeholder: defaultAuthor,
+		initialValue: defaultAuthor,
+		validate: (author = defaultAuthor) => {
 			if (!author || author.length === 0) {
 				return "author is required"
 			}
@@ -159,4 +164,4 @@ await Bun.spawn(["bun", "x", "eslint", "--fix", "package.json"]).exited
 
 spin.stop("wrote package.json")
 
-outro(`userscript is set up ${styleText("green", "✓")}`)
+outro(`${styleText("gray", "userscript customized")} ${styleText("green", "✓")}`)
