@@ -99,6 +99,10 @@ The [build script](./build/index.ts) takes two optional flags:
 - [Violentmonkey](https://violentmonkey.github.io)
 - [Violentmonkey API Documentation](https://violentmonkey.github.io/api)
 
+## Todo
+
+- Bookmarklet mode
+
 ## License
 
 GNU GPLv3

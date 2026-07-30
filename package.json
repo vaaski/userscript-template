@@ -1,9 +1,12 @@
 {
-	"name": "userscript-template",
+	"name": "@schaukel/u9",
 	"type": "module",
 	"version": "1.0.0",
-	"description": "A template for creating a userscript",
+	"description": "Opinionated, slim and fast CLI and boilerplate for creating userscripts",
 	"author": "vaaski <admin@vaa.ski>",
+	"exports": {
+		".": "./userscript/util"
+	},
 	"module": "index.ts",
 	"bin": {
 		"u9": "cli/index.ts"
